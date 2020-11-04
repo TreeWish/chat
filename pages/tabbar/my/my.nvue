@@ -1,0 +1,169 @@
+<template>
+	<view>
+		<view>日报功能正在开发中...</view>
+		<button type="default" @click="open">下载</button>
+	</view>
+</template>
+
+<script>
+export default {
+	data() {
+		return {
+			msg: ''
+		};
+	},
+	onLoad() {
+		const openfile = uni.requireNativePlugin('aq-fileviewer');
+		// this.getSeverData();
+		// this.download()
+	},
+	methods: {
+		download() {
+			// uni.request({
+			// 	url: 'http://221.207.32.234:8808//kbdata-war/mouldDownload/reportLog?reportName=王家庄-褚家营日报-2020-10-23',
+			// 	success: res => {
+			// 		// console.log(res.data);
+			// 		  // 用返回二进制数据创建一个Blob实例
+			// 		  let blob = new Blob([res.data], {
+			// 		    type: "application/octet-stream",
+			// 		  }) // for .xlsx files
+			// 		  // 通过URL.createObjectURL生成文件路径
+			// 		  let url = window.URL.createObjectURL(blob)
+			// 		  // 创建a标签
+			// 		  let ele = document.createElement("a")
+			// 		  ele.style.display = 'none'
+			// 		  // 设置href属性为文件路径，download属性可以设置文件名称
+			// 		  ele.href = url
+			// 		  ele.download = "test"
+			// 		  // 将a标签添加到页面并模拟点击
+			// 		  document.querySelectorAll("body")[0].appendChild(ele)
+			// 		  ele.click()
+			// 		  // 移除a标签
+			// 		  ele.remove()
+			// 			}
+			// 		})
+			// uni.downloadFile({
+			// 	url: 'http://221.207.32.234:8808//kbdata-war/mouldDownload/reportLog?reportName=王家庄-褚家营日报-2020-10-23',
+			// 	success: res => {
+			// 		const filePath = res.tempFilePath;
+			// 		const originName = filePath.substring(filePath.lastIndexOf('/') + 1, filePath.length);
+			// 		const fileName = escape(originName);
+			// 		plus.io.resolveLocalFileSystemURL(filePath, orinFile => {
+			// 			plus.io.resolveLocalFileSystemURL('_downloads', dstDir => {
+			// 				orinFile.moveTo(
+			// 					dstDir,
+			// 					fileName,
+			// 					dstFile => {
+			// 						uni.openDocument({
+			// 							filePath: plus.io.convertAbsoluteFileSystem(dstFile.fullPath),
+			// 							fileType: 'docx',
+			// 							success: res => {
+			// 								console.log('打开文档成功', dstFile);
+			// 							},
+			// 							fail: err => {
+			// 								console.log(err);
+			// 							}
+			// 						});
+			// 					},
+			// 					err => {
+			// 						console.log(err, err.message);
+			// 					}
+			// 				);
+			// 			});
+			// 		});
+			// 	}
+			// });
+			// uni.downloadFile({
+			// 	url: 'http://221.207.32.234:8808//kbdata-war/mouldDownload/reportLog?reportName=王家庄-褚家营日报-2020-10-23',
+			// 	success: ({statusCode, tempFilePath}) => {
+			// 		//statusCode状态为200表示请求成功，tempFIlePath临时路径
+			// 		if (statusCode == 200) {
+			// 			console.log(tempFilePath);
+			// 			uni.saveFile({
+			// 				tempFilePath,
+			// 				success: res => {
+			// 					// console.log(res);
+			// 					console.log(res.savedFilePath);
+			// 					//res.savedFilePath文件的保存路径
+			// 					//保存成功并打开文件
+			// 					uni.openDocument({
+			// 						filePath: res.savedFilePath,
+			// 						fileType: 'docx',
+			// 						success: res => console.log('成功打开文档')
+			// 					});
+			// 				},
+			// 				fail: () => console.log('下载失败')
+			// 			});
+			// 		}
+			// 	}
+			// });
+		},
+		getSeverData() {
+			var parameter = {
+				page: {
+					currentPage: '1',
+					pageSize: '10'
+				},
+				reportName: '20',
+				startTime: '2020-10-22',
+				endTime: '2020-10-24',
+				monitorId: '1'
+			};
+			var sendata = {
+				parameter: '',
+				serviceCode: 'reportLog',
+				timestamp: '',
+				uuid: ''
+			};
+			var msgstr = JSON.stringify(parameter);
+			sendata.parameter = msgstr;
+			var sengstring = JSON.stringify(sendata).replace('%', '%25');
+			var msg = 'appMsg=' + sengstring;
+			uni.request({
+				url: 'http://221.207.32.234:8808/kbdata-war/app/serviceApi',
+				data: msg,
+				method: 'POST',
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					console.log(res.data);
+				}
+			});
+		},
+		open() {
+			const openfile = uni.requireNativePlugin('aq-fileviewer');
+			openfile.testAsyncFunc(
+				{
+					url: 'http://221.207.32.234:8808//kbdata-war/mouldDownload/reportLog?reportName=王家庄-褚家营日报-2020-10-23',
+					deleteFile: true, //是否在关闭页面时删除文件
+					popup: true, //是否开启小窗模式
+					width: 'half', //popup为true时生效，值有 all等于屏幕宽度,half屏幕宽的一半,mini屏幕宽的4分之一
+					height: 'half', //popup为true时生效，值有 all屏幕高度,half屏幕高的一半,mini屏幕高的4分之一
+					title: '123', //自定义文件名和标题名
+					cover: false //是否覆盖已存在的文件，false时会直接使用本地文件，不会下载新文件。true会下载覆盖就文件
+				},
+				function(b) {
+					console.log(JSON.stringify(b));
+				}
+			);
+		},
+		//popup为true时，显示小窗
+		show() {
+			openfile.show();
+		},
+		//popup为true时，隐藏小窗
+		hide() {
+			openfile.hide();
+		},
+		//获取x5是否可用，返回 false和true
+		getLoadX5() {
+			openfile.getLoadX5(function(b) {
+				console.log(JSON.stringify(b));
+			});
+		}
+	}
+};
+</script>
+
+<style></style>

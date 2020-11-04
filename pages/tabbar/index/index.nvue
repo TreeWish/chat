@@ -1,0 +1,43 @@
+<template>
+	<view>
+		<!-- 导航条 -->
+		<navbar title="微信" @openExtend="openExtend"></navbar>
+		<!-- 聊天列表 -->
+		<block v-for="item in 10" :key="index">
+			<chatList></chatList>
+		</block>
+		<popup :isShow="isShow" :mask="false" :maskColor="false" postion="top:50rpx;left:20rpx;"></popup>
+	</view>
+</template>
+
+<script>
+import chatList from '@/components/chat-list/chat-list.vue';
+export default {
+	components: {
+		chatList
+	},
+	data() {
+		return {
+			statusBarHeight: 0,
+			isShow: false
+		};
+	},
+	onLoad() {
+		// #ifdef APP-PLUS-NVUE
+		// 加载公共图标库
+		const domModule = weex.requireModule('dom');
+		domModule.addRule('fontFace', {
+			fontFamily: 'iconfont',
+			src: "url('https://at.alicdn.com/t/font_2142552_b0ffpxc0s8.ttf')"
+		});
+		// #endif
+	},
+	methods: {
+		openExtend() {
+			this.isShow = !this.isShow
+		}
+	}
+};
+</script>
+
+<style></style>
