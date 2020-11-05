@@ -6,7 +6,7 @@
 		<block v-for="item in 10" :key="index">
 			<chatList></chatList>
 		</block>
-		<popup :isShow="isShow" :mask="false" :maskColor="false" postion="top:50rpx;left:20rpx;"></popup>
+		<popup ref="openExtend" :isShow="isShow" :mask="true" :maskColor="true" postion="left: 0;right:0;top:50px"></popup>
 	</view>
 </template>
 
@@ -34,7 +34,7 @@ export default {
 	},
 	methods: {
 		openExtend() {
-			this.isShow = !this.isShow
+			this.$refs.openExtend.show()
 		}
 	}
 };

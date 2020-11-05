@@ -18,11 +18,11 @@
 </template>
 
 <script>
-// import iconbtn from '@/components/iconbtn/iconbtn';
+import iconbtn from '@/components/iconbtn/iconbtn';
 export default {
-	// components: {
-	// 	iconbtn
-	// },
+	components: {
+		iconbtn
+	},
 	props: {
 		fixed: {
 			type: Boolean,

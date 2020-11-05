@@ -1,12 +1,11 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-			"path": "pages/tabbar/my/my",
+			"path": "pages/tabbar/index/index",
 			"style": {
-				"navigationBarTitleText": "chat",
+				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false
 			}
-
 		}, {
 			"path": "pages/tabbar/mail/mail",
 			"style": {
@@ -21,14 +20,16 @@
 				"enablePullDownRefresh": false
 			}
 
-		}, {
-			"path": "pages/tabbar/index/index",
+		},
+		{
+			"path": "pages/tabbar/my/my",
 			"style": {
-				"navigationBarTitleText": "",
+				"navigationBarTitleText": "chat",
 				"enablePullDownRefresh": false
 			}
 
 		}
+
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
