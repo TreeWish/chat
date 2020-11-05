@@ -1,4 +1,4 @@
-# 初始化项目 gitee
+# 初始化项目 gitee github
 
 # unipush
 ```
