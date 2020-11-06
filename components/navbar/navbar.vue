@@ -42,7 +42,6 @@ export default {
 		};
 	},
 	mounted() {
-		console.log(this.title);
 		// #ifdef APP-PLUS-NVUE
 		this.statusBarHeight = plus.navigator.getStatusbarHeight();
 		// #endif

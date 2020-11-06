@@ -1,1 +1,1 @@
-<view>my</view>
+<view><view>日报功能正在开发中...</view><button type="default" data-event-opts="{{[['tap',[['open',['$event']]]]]}}" bindtap="__e">下载</button></view>

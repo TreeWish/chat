@@ -1,5 +1,9 @@
 {
-  "navigationBarTitleText": "chat",
+  "navigationBarTitleText": "",
   "enablePullDownRefresh": false,
-  "usingComponents": {}
+  "usingComponents": {
+    "navbar": "/components/navbar/navbar",
+    "popup": "/components/popup/popup",
+    "chat-list": "/components/chat-list/chat-list"
+  }
 }

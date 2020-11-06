@@ -1,5 +1,5 @@
 <template>
-	<view class="flex align-stretch" hover-class="bg-hover-light">
+	<view class="flex align-stretch" hover-class="bg-hover-light" @longpress="longClick">
 		<!--  @click="chatClick" @longpress="longClick" -->
 		<view class="flex align-center justify-center position-relative" style="width: 145rpx;">
 			<avatar src="/static/images/mail/tag.png"></avatar>
@@ -31,7 +31,21 @@ export default {
 			console.log('click');
 		},
 		longClick(e) {
-			console.log(e);
+			let x = 0;
+			let y = 0;
+			// #ifdef APP-PLUS-NVUE
+			if(Array.isArray(e.touches) && e.touches.length >0) {	
+				x = e.touches[0].screenX;
+				y = e.touches[0].screenY;
+			}
+			// #endif
+			// #ifdef MP-WEIXIN
+			if(Array.isArray(e.touches) && e.touches.length >0) {
+				x = e.detail.x;
+				y = e.detail.y;
+			}
+			// #endif
+			this.$emit('long',{x,y})
 		}
 	}
 };
