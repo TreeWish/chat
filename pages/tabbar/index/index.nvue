@@ -1,12 +1,19 @@
 <template>
 	<view>
 		<!-- 导航条 -->
-		<navbar title="微信" @openExtend="openExtend"></navbar>
+		<navbar title="微信"></navbar>
 		<!-- 聊天列表 -->
-		<block v-for="item in 10" :key="index">
-			<chatList @long="long"></chatList>
+		<block v-for="(item,index) in chatList" :key="index">
+			<chatList v-if="item.isTop" @long="long" :item="item" :index="index"></chatList>
 		</block>
-		<popup width="240" height="300" ref="openExtend" :isShow="isShow" :mask="true" :maskColor="false"></popup>
+		<block v-for="(item,index) in chatList" :key="index">
+			<chatList v-if="!item.isTop" @long="long" :item="item" :index="index"></chatList>
+		</block>
+		<popup width="240" height="300" ref="openExtend" :isShow="isShow" :mask="true" :maskColor="false">
+			<view :style="menuStyle" class="flex flex-column" v-for="item in popMenus">
+				<text @click="clickEvent(item)" class="font-md flex-1 flex align-center p-3" hover-class="bg-hover-light">{{item.name}}</text>
+			</view>
+		</popup>
 	</view>
 </template>
 
@@ -20,6 +27,52 @@ export default {
 		return {
 			statusBarHeight: 0,
 			isShow: false,
+			popMenus: [
+				{
+					name: '标记以读',
+					event: ''
+				},
+				{
+					name: '取消置顶',
+					event: 'setTop'
+				},
+				{
+					name: '删除该聊天',
+					event: 'delChat'
+				}
+			],
+			chatIndex: 0,
+			chatList: [
+				{
+					nickname : '昵称',
+					noReadNum: 4,
+					time: 1603422809,
+					content: '消息内容',
+					isTop: false
+				},
+				{
+					nickname : '昵称2',
+					noReadNum: 2,
+					time: 1603422809,
+					content: '消息内容',
+					isTop: false
+				},
+				{
+					nickname : '昵称3',
+					noReadNum: 3,
+					time: 1603422809,
+					content: '消息内容',
+					isTop: false
+				},
+				{
+					nickname : '昵称4',
+					noReadNum: 1,
+					time: 1603422809,
+					content: '消息内容',
+					isTop: true
+				},
+			],
+			topList: []
 		};
 	},
 	onLoad() {
@@ -33,11 +86,34 @@ export default {
 		// #endif
 	},
 	methods: {
-		long({x,y}) {
-			this.$refs.openExtend.show(x, y)
+		long({x,y,index}) {
+			this.chatIndex = index;
+			let cur = this.chatList[index];
+			if(cur.isTop) {
+				this.popMenus[1].name = '取消置顶'
+			} else {
+				this.popMenus[1].name = '置顶该聊天'
+			}
+			this.$refs.openExtend.show(x, y);
 		},
-		openExtend() {
-			this.$refs.openExtend.show()
+		clickEvent(item) {
+			let event = item.event
+			console.log(event);
+			switch(event) {
+				case "setTop": 
+					this.setTop() 
+					break;
+				case "delChat": 
+					this.delChat() 
+					break;
+			}
+		},
+		delChat() {
+			this.chatList.splice(this.chatIndex, 1);
+		},
+		setTop() {
+			const cur = this.chatList[this.chatIndex]
+			cur.isTop = !cur.isTop	
 		}
 	}
 };

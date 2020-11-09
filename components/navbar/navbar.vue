@@ -14,6 +14,14 @@
 			</view>
 		</view>
 		<view v-if="fixed" :style="fixedStyle"></view>
+		<popup width="105" height="320" ref="openExtend">
+			<view style="width: 320rpx;height: 525rpx;" :style="menuStyle" class="flex flex-column">
+				<view class="flex-1 flex align-center bg-dark" hover-class="bg-hover-dark" v-for="item in 5">
+					<text class="iconfont font-md text-white pl-3 pr-2">&#xe650;</text>
+					<text class="font-md text-white">标记以读</text>
+				</view>
+			</view>
+		</popup>
 	</view>
 </template>
 
@@ -59,7 +67,8 @@ export default {
 	methods: {
 		openExtend() {
 			console.log('open');
-			this.$emit('openExtend')
+			this.$refs.openExtend.show(uni.upx2px(415), uni.upx2px(150))
+			// this.$emit('openExtend')
 		}
 	},
 };

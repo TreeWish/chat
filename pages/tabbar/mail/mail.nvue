@@ -1,11 +1,19 @@
 <template>
 	<view>
-		mail
+		<!-- 导航条 -->
+		<navbar title="通讯录"></navbar>
+		<block v-for="item in 3">
+			<listItem></listItem>
+		</block>
 	</view>
 </template>
 
 <script>
+	import listItem from '@/components/list-item/list-item.vue'
 	export default {
+		components: {
+			listItem
+		},
 		data() {
 			return {
 				

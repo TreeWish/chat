@@ -60,22 +60,7 @@
                 "ad" : {}
             }
         },
-        "nativePlugins" : {
-            "aq-fileviewer" : {
-                "__plugin_info__" : {
-                    "name" : "office预览，xls，xlsx，docx，pdf，txt,pdf,ppt - [试用版，仅用于自定义调试基座]",
-                    "description" : "office预览，xls，xlsx，docx，pdf，txt,pdf,ppt,支持http，htts",
-                    "platforms" : "Android",
-                    "url" : "https://ext.dcloud.net.cn/plugin?id=2825",
-                    "android_package_name" : "",
-                    "ios_bundle_id" : "",
-                    "isCloud" : true,
-                    "bought" : 0,
-                    "pid" : "2825",
-                    "parameters" : {}
-                }
-            }
-        }
+        "nativePlugins" : {}
     },
     /* 快应用特有相关 */
     "quickapp" : {},

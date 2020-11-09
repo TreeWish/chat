@@ -3,17 +3,12 @@
 		<!-- 蒙版 -->
 		<view v-if="mask" class="position-fixed top-0 left-0 right-0 bottom-0" :style="getMaskColor" @click="hide"></view>
 		<!-- 弹出框内容 -->
-		<view :class="popupClass" class="position-fixed bg-white" :style="popupPostion">
-			<view :style="menuStyle" class="flex flex-column">
-				<text class="font-md flex-1 flex align-center p-3" hover-class="bg-hover-light">标记以读</text>
-				<text class="font-md flex-1 flex align-center p-3" hover-class="bg-hover-light">置顶聊天</text>
-				<text class="font-md flex-1 flex align-center p-3" hover-class="bg-hover-light">删除该聊天</text>
-			</view>
-		</view>
+		<view :class="popupClass" class="position-fixed bg-white animate" :style="popupPostion" ref="pop"><slot></slot></view>
 	</view>
 </template>
 
 <script>
+const animation = weex.requireModule('animation');
 export default {
 	props: {
 		isShow: {
@@ -26,7 +21,7 @@ export default {
 		},
 		mask: {
 			type: Boolean,
-			default: false
+			default: true
 		},
 		// 是否处于底部
 		postion: {
@@ -58,51 +53,96 @@ export default {
 		},
 		// 获取弹出层位置
 		popupPostion() {
-			let left = this.x >-1 ?`left:${this.x}px;` : '';
-			let top = this.y >-1 ?`top:${this.y}px;` : '';
-			let postion = this.postion ? `${left+top}` : 'left: 0;right:0;bottom:0';
+			let left = this.x > -1 ? `left:${this.x}px;` : '';
+			let top = this.y > -1 ? `top:${this.y}px;` : '';
+			let postion = this.postion ? `${left + top}` : 'left: 0;right:0;bottom:0';
 			return postion;
 		},
 		popupClass() {
-			let postion = this.postion ? 'left-0;right-0;bottom-0' :'rounded border';
-			return postion
+			let postion = this.postion ? 'left-0;right-0;bottom-0' : 'rounded border';
+			return postion;
 		},
 		menuStyle() {
 			let height = 100;
-			const width = 240; 
-			height = height * this.menu
-			return `width: ${width}rpx;height:${height}rpx`
+			const width = 240;
+			height = height * this.menu;
+			return `width: ${width}rpx;height:${height}rpx`;
 		}
 	},
 	methods: {
 		show(x, y) {
-			if(x && y) {
-				this.postion = true
+			if (x && y) {
+				this.postion = true;
 				this.x = x > this.maxX ? this.maxX : x;
 				this.y = y > this.maxY ? this.maxY : y;
 			} else {
-				this.postion = false
+				this.postion = false;
 			}
-			console.log(this.popupPostion);
 			this.isShow = true;
+			// #ifdef APP-PLUS-NVUE
+			this.$nextTick(() => {
+				animation.transition(
+					this.$refs.pop,
+					{
+						styles: {
+							transform: 'scale(1, 1)',
+							transformOrigin: 'left top',
+							opacity: 1
+						},
+						duration: 100 //ms
+					},
+					() => {
+						console.log('动画执行结束');
+					}
+				);
+			});
+			// #endif
 		},
 		hide() {
+			// #ifdef APP-PLUS-NVUE
+			let transformOrigin = 'left top'
+			if(this.x == 415) {
+				transformOrigin = 'right top'
+			}
+			animation.transition(
+				this.$refs.pop,
+				{
+					styles: {
+						transform: 'scale(0, 0)',
+						opacity: 0,
+						transformOrigin: transformOrigin
+					},
+					duration: 100
+				},
+				() => {
+					this.isShow = false;
+				}
+			);
+			// #endif
+			// #ifndef APP-PLUS
 			this.isShow = false;
+			// #endif
 			console.log('hide');
 		}
 	},
 	mounted() {
-
-		try{
-			const info = uni.getSystemInfoSync()
-			this.maxX = info.windowWidth - uni.upx2px(this.width)
-			this.maxY = info.windowHeight - uni.upx2px(this.height)
-		}catch(e){
+		try {
+			const info = uni.getSystemInfoSync();
+			this.maxX = info.windowWidth - uni.upx2px(this.width);
+			this.maxY = info.windowHeight - uni.upx2px(this.height);
+		} catch (e) {
 			//TODO handle the exception
-			
 		}
 	}
 };
 </script>
 
-<style></style>
+<style scoped>
+.animate {
+	/* #ifdef APP-PLUS-NVUE */
+	transform: scale(0, 0);
+	opacity: 0;
+
+	/* #endif */
+}
+</style>
