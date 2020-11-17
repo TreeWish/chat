@@ -6,7 +6,7 @@ export default {
 		const domModule = weex.requireModule('dom');
 		domModule.addRule('fontFace', {
 			fontFamily: 'iconfont',
-			src: "url('https://at.alicdn.com/t/font_2142552_b0ffpxc0s8.ttf')"
+			src: "url('https://at.alicdn.com/t/font_2142552_mu83j4c17ke.ttf')"
 		});
 		// #endif
 		console.log('App Launch');

@@ -1,22 +1,64 @@
 <template>
 	<view>
-		find
+		<!-- 导航条 -->
+		<navbar title="发现"></navbar>
+		<listItem showRight title="朋友圈">
+			<text slot="icon" class="iconfont font-lg py-2">&#xe60c;</text>
+			<view slot="avatar" class="p-1 position-relative">
+				<avatar src="/static/images/mail/friend.png" size="55"></avatar>
+				<view class="position-absolute rounded-circle bg-danger" style="width: 20rpx;height: 20rpx;top: 0;right: 0;"></view>
+			</view>
+		</listItem>
+		<divider></divider>
+		<listItem showRight title="视频号">
+			<text slot="icon" class="iconfont font-lg py-2">&#xe60c;</text>
+			<view slot="avatar" class="p-1 position-relative">
+				<avatar src="/static/images/mail/friend.png" size="55"></avatar>
+				<view class="position-absolute rounded-circle bg-danger" style="width: 20rpx;height: 20rpx;top: 0;right: 0;"></view>
+			</view>
+		</listItem>
+		<divider></divider>
+		<listItem showRight title="扫一扫"><text slot="icon" class="iconfont font-lg py-2">&#xe60b;</text></listItem>
+		<listItem showRight title="摇一摇"><text slot="icon" class="iconfont font-lg py-2">&#xe60e;</text></listItem>
+		<divider></divider>
+		<listItem showRight title="看一看"><text slot="icon" class="iconfont font-lg py-2">&#xe60d;</text></listItem>
+		<listItem showRight title="搜一搜"><text slot="icon" class="iconfont font-lg py-2">&#xe614;</text></listItem>
+		<divider></divider>
+		<listItem showRight title="附近的人"><text slot="icon" class="iconfont font-lg py-2">&#xe603;</text></listItem>
+		<divider></divider>
+		<listItem showRight title="购物"><text slot="icon" class="iconfont font-lg py-2">&#xe611;</text></listItem>
+		<listItem showRight title="游戏"><text slot="icon" class="iconfont font-lg py-2">&#xe612;</text></listItem>
+		<divider></divider>
+		<listItem showRight title="小程序"><text slot="icon" class="iconfont font-lg py-2">&#xe613;</text></listItem>
+		<divider></divider>
 	</view>
 </template>
 
 <script>
-	export default {
-		data() {
-			return {
-				
-			}
-		},
-		methods: {
-			
-		}
-	}
+import avatar from '@/components/avatar/avatar.vue';
+import navbar from '@/components/navbar/navbar.vue';
+import listItem from '@/components/list-item/list-item.vue';
+export default {
+	components: {
+		avatar,
+		navbar,
+		listItem
+	},
+	data() {
+		return {};
+	},
+	onLoad() {
+		// #ifdef APP-PLUS-NVUE
+		// 加载公共图标库
+		const domModule = weex.requireModule('dom');
+		domModule.addRule('fontFace', {
+			fontFamily: 'iconfont',
+			src: "url('https://at.alicdn.com/t/font_2142552_mu83j4c17ke.ttf')"
+		});
+		// #endif
+	},
+	methods: {}
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

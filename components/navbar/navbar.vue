@@ -1,15 +1,19 @@
 <template>
 	<view>
 		<!-- 导航条 -->
-		<view class="bg-light fixed-top">
+		<view :class="bgClass">
 			<!-- 状态栏 -->
 			<view :style="'height:' + statusBarHeight + 'px'"></view>
 			<!-- 导航 -->
 			<view class="w-100 flex justify-between align-center" style="height: 90rpx;">
-				<view class="flex align-center"><text v-if="title" class="font-md ml-3">{{getTitle}}</text></view>
 				<view class="flex align-center">
-					<iconbtn :icon="'\ue650'"></iconbtn>
-					<iconbtn :icon="'\ue664'" @click="openExtend"></iconbtn>
+					<text v-if="title" class="font-md ml-3">{{ getTitle }}</text>
+				</view>
+				<view class="flex align-center">
+					<slot name="iconbtn">
+						<iconbtn :icon="'\ue650'"></iconbtn>
+						<iconbtn :icon="'\ue664'" @click="openExtend"></iconbtn>
+					</slot>
 				</view>
 			</view>
 		</view>
@@ -39,6 +43,10 @@ export default {
 		title: {
 			type: String,
 			default: ''
+		},
+		bgColor: {
+			type: String,
+			default: 'bg-light'
 		}
 	},
 	data() {
@@ -60,17 +68,24 @@ export default {
 			return `height: ${this.navBarHeight}px`;
 		},
 		getTitle() {
-			let title = this.noreadNum >0 ? `${this.title}(${this.noreadNum})`: this.title
-			return title
+			let title = this.title;
+			if (title === '微信') {
+				title = this.noreadNum > 0 ? `${this.title}(${this.noreadNum})` : this.title;
+			}
+			return title;
+		},
+		bgClass() {
+			let bg = this.bgColor ? this.bgColor : 'bg-light';
+			return `${bg} fixed-top`;
 		}
 	},
 	methods: {
 		openExtend() {
 			console.log('open');
-			this.$refs.openExtend.show(uni.upx2px(415), uni.upx2px(150))
+			this.$refs.openExtend.show(uni.upx2px(415), uni.upx2px(150));
 			// this.$emit('openExtend')
 		}
-	},
+	}
 };
 </script>
 
