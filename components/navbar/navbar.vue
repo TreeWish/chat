@@ -7,6 +7,7 @@
 			<!-- 导航 -->
 			<view class="w-100 flex justify-between align-center" style="height: 90rpx;">
 				<view class="flex align-center">
+					<iconbtn v-if="showBack" :icon="'\uebf5'" @click="back"></iconbtn>
 					<text v-if="title" class="font-md ml-3">{{ getTitle }}</text>
 				</view>
 				<view class="flex align-center">
@@ -47,6 +48,10 @@ export default {
 		bgColor: {
 			type: String,
 			default: 'bg-light'
+		},
+		showBack: {
+			type: Boolean,
+			default: false
 		}
 	},
 	data() {
@@ -84,6 +89,9 @@ export default {
 			console.log('open');
 			this.$refs.openExtend.show(uni.upx2px(415), uni.upx2px(150));
 			// this.$emit('openExtend')
+		},
+		back() {
+			uni.navigateBack();
 		}
 	}
 };

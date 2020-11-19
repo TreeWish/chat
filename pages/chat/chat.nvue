@@ -1,0 +1,55 @@
+<template>
+	<view>
+		<!-- 导航栏 -->
+		<navbar title="进击的前端" showBack>
+			<view slot="iconbtn"><iconbtn :icon="'\ue63c'"></iconbtn></view>
+		</navbar>
+		<!-- 内容区 -->
+		<scroll-view scroll-y="true">
+			<block v-for="i in 3">
+				<view class="flex px-2 align-start justify-start position-relative mb-3">
+					<avatar size="70" src="/static/images/mail/friend.png"></avatar>
+					<text class="iconfont font-md position-absolute" style="left: 98rpx;top: 25rpx;color: #fff;">&#xebf6;</text>
+					<div class="bg-white py-2 px-1 rounded ml-3" style="max-width: 500rpx;padding-left: 15rpx;">
+						<text class="font-md">你好你好你好你好你好你好你好你好你好你好你好你好好</text>
+					</div>
+				</view>
+				<view class="flex px-2 align-start justify-end position-relative mb-3">
+					<text class="iconfont font-md position-absolute text-chat-item" style="right: 98rpx;top: 25rpx;">&#xe62d;</text>
+					<div class="bg-chat-item rounded py-2 px-1 mr-3" style="max-width: 500rpx;padding-left: 15rpx;">
+						<text class="font-md">你好你好你好你好你好你好你好你好你好你好你好你好好</text>
+					</div>
+					<avatar size="70" src="/static/images/mail/friend.png"></avatar>
+				</view>
+			</block>
+		</scroll-view>
+		<!-- 底部菜单栏 -->
+		<view class="position-fixed flex align-center border-top" style="height: 105rpx;left: 0;right: 0;bottom: 0;background-color: #f7f7f7;">
+			<iconbtn :icon="'\ue7d4'"></iconbtn>
+			<view class="flex-1 align-center flex"><textarea class="p-2 bg-white rounded font-md" style="height: 78rpx;" /></view>
+			<iconbtn :icon="'\ue60f'"></iconbtn>
+			<iconbtn :icon="'\ue664'"></iconbtn>
+		</view>
+	</view>
+</template>
+
+<script>
+export default {
+	data() {
+		return {};
+	},
+	onLoad() {
+		// #ifdef APP-PLUS-NVUE
+		// 加载公共图标库
+		const domModule = weex.requireModule('dom');
+		domModule.addRule('fontFace', {
+			fontFamily: 'iconfont',
+			src: "url('https://at.alicdn.com/t/font_2142552_awkanprjly9.ttf')"
+		});
+		// #endif
+	},
+	methods: {}
+};
+</script>
+
+<style></style>

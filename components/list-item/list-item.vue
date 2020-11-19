@@ -23,7 +23,7 @@
 			},
 			title: {
 				type: String,
-				default: ''
+				default: 'TreeWish'
 			},
 			imgSize: {
 				type: [String, Number],

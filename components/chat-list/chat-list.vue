@@ -1,5 +1,5 @@
 <template>
-	<view :class="item.isTop ? 'bg-light' : 'bg-white'" class="flex align-stretch" hover-class="bg-hover-light" @longpress="longClick($event, index)" @click="chatClick(index)">
+	<view :class="item.isTop ? 'bg-light' : 'bg-white'" class="flex align-stretch" hover-class="bg-hover-light" @longpress="longClick($event, index)" @click="chatClick">
 		<view class="flex align-center justify-center position-relative" style="width: 145rpx;">
 			<avatar src="/static/images/mail/tag.png"></avatar>
 			<badge :value="item.noReadNum" class="position-absolute" style="right: 15rpx;top: 15rpx;"></badge>
@@ -63,8 +63,10 @@ export default {
 		}
 	},
 	methods: {
-		chatClick(event) {
-			console.log(event);
+		chatClick() {
+			uni.navigateTo({
+				url: '/pages/chat/chat'
+			})
 		},
 
 		longClick(e, index) {

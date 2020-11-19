@@ -11,7 +11,7 @@
 		</listItem>
 		<divider></divider>
 		<listItem showRight title="视频号">
-			<text slot="icon" class="iconfont font-lg py-2">&#xe60c;</text>
+			<text slot="icon" class="iconfont font-lg py-2">&#xe621;</text>
 			<view slot="avatar" class="p-1 position-relative">
 				<avatar src="/static/images/mail/friend.png" size="55"></avatar>
 				<view class="position-absolute rounded-circle bg-danger" style="width: 20rpx;height: 20rpx;top: 0;right: 0;"></view>
@@ -53,7 +53,7 @@ export default {
 		const domModule = weex.requireModule('dom');
 		domModule.addRule('fontFace', {
 			fontFamily: 'iconfont',
-			src: "url('https://at.alicdn.com/t/font_2142552_mu83j4c17ke.ttf')"
+			src: "url('https://at.alicdn.com/t/font_2142552_41fvq532n3y.ttf')"
 		});
 		// #endif
 	},
