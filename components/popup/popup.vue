@@ -35,6 +35,10 @@ export default {
 		height: {
 			type: Number,
 			default: 100
+		},
+		tabBarHeight: {
+			type: Number,
+			default: 105
 		}
 	},
 	data() {
@@ -129,7 +133,7 @@ export default {
 		try {
 			const info = uni.getSystemInfoSync();
 			this.maxX = info.windowWidth - uni.upx2px(this.width);
-			this.maxY = info.windowHeight - uni.upx2px(this.height);
+			this.maxY = info.windowHeight - uni.upx2px(this.height) - uni.upx2px(this.tabBarHeight);
 		} catch (e) {
 			//TODO handle the exception
 		}

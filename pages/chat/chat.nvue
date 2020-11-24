@@ -6,22 +6,7 @@
 		</navbar>
 		<!-- 内容区 -->
 		<scroll-view scroll-y="true">
-			<block v-for="i in 3">
-				<view class="flex px-2 align-start justify-start position-relative mb-3">
-					<avatar size="70" src="/static/images/mail/friend.png"></avatar>
-					<text class="iconfont font-md position-absolute" style="left: 98rpx;top: 25rpx;color: #fff;">&#xebf6;</text>
-					<div class="bg-white py-2 px-1 rounded ml-3" style="max-width: 500rpx;padding-left: 15rpx;">
-						<text class="font-md">你好你好你好你好你好你好你好你好你好你好你好你好好</text>
-					</div>
-				</view>
-				<view class="flex px-2 align-start justify-end position-relative mb-3">
-					<text class="iconfont font-md position-absolute text-chat-item" style="right: 98rpx;top: 25rpx;">&#xe62d;</text>
-					<div class="bg-chat-item rounded py-2 px-1 mr-3" style="max-width: 500rpx;padding-left: 15rpx;">
-						<text class="font-md">你好你好你好你好你好你好你好你好你好你好你好你好好</text>
-					</div>
-					<avatar size="70" src="/static/images/mail/friend.png"></avatar>
-				</view>
-			</block>
+			<block v-for="(item, index) in list" :key="index"><chat-item :item="item" :pretime="index > 0 ? list[index - 1].create_time : 0" @long="long" :index="index"></chat-item></block>
 		</scroll-view>
 		<!-- 底部菜单栏 -->
 		<view class="position-fixed flex align-center border-top" style="height: 105rpx;left: 0;right: 0;bottom: 0;background-color: #f7f7f7;">
@@ -30,13 +15,89 @@
 			<iconbtn :icon="'\ue60f'"></iconbtn>
 			<iconbtn :icon="'\ue664'"></iconbtn>
 		</view>
+		<popup width="240" height="300" ref="openExtend" :tabBarHeight="105" :isShow="isShow" :mask="true" :maskColor="false">
+			<view :style="menuStyle" class="flex flex-column" v-for="item in menuList">
+				<text @click="clickEvent(item)" class="font-md flex-1 flex align-center p-3" hover-class="bg-hover-light">{{ item.name }}</text>
+			</view>
+		</popup>
 	</view>
 </template>
 
 <script>
 export default {
 	data() {
-		return {};
+		return {
+			popMenus: [
+				{
+					name: '复制',
+					event: ''
+				},
+				{
+					name: '转发',
+					event: ''
+				},
+				{
+					name: '收藏',
+					event: ''
+				},
+				{
+					name: '删除',
+					event: ''
+				},
+				{
+					name: '多选',
+					event: ''
+				},
+				{
+					name: '引用',
+					event: ''
+				},
+				{
+					name: '翻译',
+					event: ''
+				},
+				{
+					name: '撤回',
+					event: ''
+				}
+			],
+			isShow: false,
+			chatIndex: -1,
+			list: [
+				{
+					avatar: '/static/images/mail/wz.jpg',
+					user_id: 1,
+					nickname: 'nidhogg',
+					type: 'text',
+					data: '你好,treewsih',
+					create_time: '1606015184'
+				},
+				{
+					avatar: '/static/images/mail/friend.png',
+					user_id: 2,
+					nickname: 'treewsih',
+					type: 'text',
+					data: '你好,nidhogg',
+					create_time: '1606101584'
+				},
+				{
+					avatar: '/static/images/mail/wz.jpg',
+					user_id: 1,
+					nickname: 'nidhogg',
+					type: 'text',
+					data: '你好,treewsih',
+					create_time: '1606015184'
+				},
+				{
+					avatar: '/static/images/mail/friend.png',
+					user_id: 2,
+					nickname: 'treewsih',
+					type: 'text',
+					data: '你好,nidhogg',
+					create_time: '1606101584'
+				}
+			]
+		};
 	},
 	onLoad() {
 		// #ifdef APP-PLUS-NVUE
@@ -48,7 +109,30 @@ export default {
 		});
 		// #endif
 	},
-	methods: {}
+	methods: {
+		long({ x, y, index }) {
+			// this.chatIndex = index;
+			// console.log(index);
+			this.$refs.openExtend.show(x, y);
+		}
+	},
+	computed: {
+		isSelf() {
+			let id = 1;
+			let user_id = this.chatIndex > -1 ? this.list[this.chatIndex].user_id : 0;
+			console.log(user_id);
+			return user_id === id;
+		},
+		menuList() {
+			return this.popMenus.filter(item => {
+				if (item.name === '撤回' && this.chatIndex ===0) {
+					return false;
+				} else {
+					return true;
+				}
+			});
+		}
+	}
 };
 </script>
 
