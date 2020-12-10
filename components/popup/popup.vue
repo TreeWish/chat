@@ -134,6 +134,7 @@ export default {
 			const info = uni.getSystemInfoSync();
 			this.maxX = info.windowWidth - uni.upx2px(this.width);
 			this.maxY = info.windowHeight - uni.upx2px(this.height) - uni.upx2px(this.tabBarHeight);
+			console.log(this.height);
 		} catch (e) {
 			//TODO handle the exception
 		}

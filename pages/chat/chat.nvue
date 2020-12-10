@@ -6,7 +6,10 @@
 		</navbar>
 		<!-- 内容区 -->
 		<scroll-view scroll-y="true">
-			<block v-for="(item, index) in list" :key="index"><chat-item :item="item" :pretime="index > 0 ? list[index - 1].create_time : 0" @long="long" :index="index"></chat-item></block>
+			<block v-for="(item, index) in list" :key="index">
+				<chat-item :item="item"
+				:pretime="index > 0 ? list[index - 1].create_time : 0" @long="long" :index="index"></chat-item>
+			</block>
 		</scroll-view>
 		<!-- 底部菜单栏 -->
 		<view class="position-fixed flex align-center border-top" style="height: 105rpx;left: 0;right: 0;bottom: 0;background-color: #f7f7f7;">
@@ -15,7 +18,7 @@
 			<iconbtn :icon="'\ue60f'"></iconbtn>
 			<iconbtn :icon="'\ue664'"></iconbtn>
 		</view>
-		<popup width="240" height="300" ref="openExtend" :tabBarHeight="105" :isShow="isShow" :mask="true" :maskColor="false">
+		<popup width="240" height="800" ref="openExtend" :tabBarHeight="105" :isShow="isShow" :mask="true" :maskColor="false">
 			<view :style="menuStyle" class="flex flex-column" v-for="item in menuList">
 				<text @click="clickEvent(item)" class="font-md flex-1 flex align-center p-3" hover-class="bg-hover-light">{{ item.name }}</text>
 			</view>
@@ -58,11 +61,11 @@ export default {
 				},
 				{
 					name: '撤回',
-					event: ''
+					event: 'remove'
 				}
 			],
 			isShow: false,
-			chatIndex: -1,
+			chatIndex: 0,
 			list: [
 				{
 					avatar: '/static/images/mail/wz.jpg',
@@ -70,7 +73,8 @@ export default {
 					nickname: 'nidhogg',
 					type: 'text',
 					data: '你好,treewsih',
-					create_time: '1606015184'
+					create_time: '1606015184',
+					isremove: false
 				},
 				{
 					avatar: '/static/images/mail/friend.png',
@@ -78,7 +82,8 @@ export default {
 					nickname: 'treewsih',
 					type: 'text',
 					data: '你好,nidhogg',
-					create_time: '1606101584'
+					create_time: '1606101584',
+					isremove: false
 				},
 				{
 					avatar: '/static/images/mail/wz.jpg',
@@ -86,7 +91,8 @@ export default {
 					nickname: 'nidhogg',
 					type: 'text',
 					data: '你好,treewsih',
-					create_time: '1606015184'
+					create_time: '1606015184',
+					isremove: false
 				},
 				{
 					avatar: '/static/images/mail/friend.png',
@@ -94,7 +100,8 @@ export default {
 					nickname: 'treewsih',
 					type: 'text',
 					data: '你好,nidhogg',
-					create_time: '1606101584'
+					create_time: '1606101584',
+					isremove: false
 				}
 			]
 		};
@@ -111,21 +118,33 @@ export default {
 	},
 	methods: {
 		long({ x, y, index }) {
-			// this.chatIndex = index;
-			// console.log(index);
+			this.chatIndex = index;
+			// console.log(index);                      
 			this.$refs.openExtend.show(x, y);
+		},
+		clickEvent({event}) {
+			switch (event) {
+				case 'remove':
+					console.log(this.chatIndex);
+					this.list[this.chatIndex].isremove = true;
+					console.log(this.list[this.chatIndex]);
+					break;
+				default:
+					break;
+			}
+			// 关闭弹出层菜单
+			this.$refs.openExtend.hide();
 		}
 	},
 	computed: {
 		isSelf() {
 			let id = 1;
 			let user_id = this.chatIndex > -1 ? this.list[this.chatIndex].user_id : 0;
-			console.log(user_id);
 			return user_id === id;
 		},
 		menuList() {
 			return this.popMenus.filter(item => {
-				if (item.name === '撤回' && this.chatIndex ===0) {
+				if (item.name === '撤回' && this.list[this.chatIndex].user_id !== 1) {
 					return false;
 				} else {
 					return true;

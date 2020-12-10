@@ -4,14 +4,18 @@
 		<view v-if="showTime" class="flex align-center justify-center pb-4 pt-2">
 			<text class="font-sm text-light-muted">{{showTime}}</text>
 		</view>
+		<!-- 撤回消息显示 -->
+		<view v-if="item.isremove" class="flex align-center justify-center pb-3 pt-1">
+			<text class="font-sm text-light-muted">你撤回了一条消息</text>
+		</view>
 		<!-- 聊天内容列表 -->
-		<view class="flex px-2 align-start justify-start position-relative mb-3" :class="isSelf ? 'justify-end' : 'justify-start'">
+		<view class="flex px-2 align-start justify-start position-relative mb-3" :class="isSelf ? 'justify-end' : 'justify-start'"  v-if="!item.isremove">
 			<template v-if="!isSelf">
 				<avatar size="70" :src="item.avatar"></avatar>
 				<text class="iconfont font-md position-absolute" style="left: 98rpx;top: 25rpx;color: #fff;">&#xebf6;</text>
 			</template>
 			<view :class="isSelf ? 'mr-3 bg-chat-item' : 'bg-white ml-3'" class="py-2 px-1 rounded " style="max-width: 500rpx;padding-left: 15rpx;">
-				<text @longpress="longClick" class="font-md">{{ item.data }}</text>
+				<text @longpress="longClick($event, index)" class="font-md">{{ item.data }}</text>
 			</view>
 			<template v-if="isSelf">
 				<text class="iconfont font-md position-absolute text-chat-item" style="right: 98rpx;top: 25rpx;">&#xe62d;</text>
@@ -34,6 +38,10 @@ export default {
 		pretime: {
 			type: Number,
 			default: 0
+		},
+		index: {
+			type: Number,
+			default: -1
 		}
 	},
 	data() {
@@ -82,4 +90,6 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+	
+</style>
